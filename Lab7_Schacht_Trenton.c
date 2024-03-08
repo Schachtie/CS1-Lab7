@@ -66,29 +66,31 @@ void printArray(PairDataFreq* array, size_t length) {
 
 int selectionSort(PairDataFreq* array, size_t length) {
     int iTotalSwaps = 0;
-    //push boundary
+    //Push the boundary of sorted elements incrementally
     for (size_t fixedElms = 0; fixedElms < length - 1; ++fixedElms) {
-        //find smallest element in unsorted portion
+        //Find smallest element in unsorted portion
         size_t minIndex = fixedElms;
         for (size_t currIndex = fixedElms + 1; currIndex < length; ++currIndex) {
             if (array[currIndex].m_iData < array[minIndex].m_iData) {
                 minIndex = currIndex;
             }
         }
-        //swap smallest element into next position of sorted array
-        swap(&array[minIndex], &array[fixedElms]);
-        ++iTotalSwaps;
+        //Swap smallest element into next position of sorted array (check for same element)
+        if (minIndex != fixedElms) {
+            swap(&array[minIndex], &array[fixedElms]);
+            ++iTotalSwaps;
+        }
     }
     return iTotalSwaps;
 }
 
 void swap(PairDataFreq* pX, PairDataFreq* pY) {
-    //swap elements
+    //Swap elements
     PairDataFreq temp = *pX;
     *pX = *pY;
     *pY = temp;
 
-    //update frequency counters
+    //Update frequency counters
     ++(pX->m_iSwapFreq);
     ++(pY->m_iSwapFreq);
 }
